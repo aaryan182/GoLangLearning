@@ -140,9 +140,35 @@ func performingUpdateMethod(){
 	fmt.Println("Response status code: ", res.StatusCode)
 }
 
+func performingDeleteMethod(){
+	const myUrl = "https://jsonplaceholder.typicode.com/todos/1"
+
+	// create DELETE request
+
+	req, err := http.NewRequest(http.MethodDelete, myUrl, nil)
+	if err != nil{
+		fmt.Println("Error in creating request", err)
+		return
+	}
+
+	// send the request
+
+	client := http.Client{}
+	res,err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error in sending request", err)
+		return
+	}
+
+	defer res.Body.Close()
+
+	fmt.Println("Response status code: ", res.StatusCode)
+}
+
 func main() {
 	fmt.Println("Learning crud in Golang")
 	// performingGetMethod()
 	// performingPostMethod()
-	performingUpdateMethod()
+	// performingUpdateMethod()
+	performingDeleteMethod()
 }
