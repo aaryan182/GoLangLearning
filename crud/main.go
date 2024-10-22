@@ -91,8 +91,58 @@ func performingPostMethod(){
 
 }
 
+func performingUpdateMethod(){
+	todo := Todo{
+		UserID: 25,
+		Title: "Aaryan Bajaj hello to all",
+		Completed: true,
+	}
+
+	jsonData, err := json.Marshal(todo)
+	if err != nil{
+		fmt.Println("Error in marshalling" , err)
+		return
+	}
+
+	// convert json data into string
+	jsonString := string(jsonData)
+
+	// convert string data into reader
+	jsonReader := strings.NewReader(jsonString)
+
+	const myURL = "https://jsonplaceholder.typicode.com/todos/10"
+
+	// create PUT request
+
+	req, err := http.NewRequest(http.MethodPut, myURL, jsonReader)
+
+	if err != nil{
+		fmt.Println("Error in creating request", err)
+		return
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+
+	// send the request
+	
+	client := http.Client{}
+	res,err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error in sending request", err)
+		return
+	}
+
+	defer res.Body.Close()
+
+	data, _ := ioutil.ReadAll(res.Body)
+	fmt.Println("response: ",string(data))
+
+	fmt.Println("Response status code: ", res.StatusCode)
+}
+
 func main() {
 	fmt.Println("Learning crud in Golang")
 	// performingGetMethod()
-	performingPostMethod()
+	// performingPostMethod()
+	performingUpdateMethod()
 }
