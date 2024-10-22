@@ -1,0 +1,1 @@
+Hello content is written file main.go , hello everyone
